@@ -1,0 +1,89 @@
+{% extends 'tracker/base.html' %}
+{% load static %}
+<!--
+=========================================================
+Material Kit - v2.0.7
+=========================================================
+
+Product Page: https://www.creative-tim.com/product/material-kit
+Copyright 2020 Creative Tim (https://www.creative-tim.com/)
+
+Coded by Creative Tim
+
+=========================================================
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
+{% block body %}
+
+  <div class="page-header header-filter col-lg-12 col-md-10" style="background-image: url({% static 'tracker/images/bg7.jpg' %}); background-size: cover; background-position: top center;">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+          <div class="card card-login">
+            <form class="form" method="POST" >
+            {% csrf_token %}
+              <div class="card-header card-header-primary text-center">
+                
+                <h3 class="h3 card-title">Ninja Tracker</h3>
+              </div>
+              <p class="description text-center">Login</p>
+              <div class="card-body">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="material-icons">face</i>
+                    </span>
+                  </div>
+                  <input  name="username" type="text" class="form-control" placeholder="Username..." >
+                </div>
+
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="material-icons">lock_outline</i>
+                    </span>
+                  </div>
+                  <input name="password" type="password" class="form-control"  placeholder="Password...">
+                </div>
+              </div>
+              <div class="footer text-center">
+                <input class="btn btn-primary" type="submit" value="Login">  
+              </div>
+              {{form.errors}}
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <footer class="footer footer-default">
+    <div class="container">
+      <nav class="float-left">
+        <ul>
+          <li>
+          <h6 class="h6">
+          <small>
+            Website by Adriel Mendez 
+            <a href="https://www.creative-tim.com/">
+              Template by Creative Tim
+            </a>
+            </small>
+            </h6>
+          </li>
+        </ul>
+      </nav>
+      <div class="copyright float-right">
+        
+        <h6 class="h6">
+        &copy;
+        <small>
+        <script>
+          document.write(new Date().getFullYear())
+        </script>, made with <i class="material-icons">favorite</i> by
+        <a href="https://www.creative-tim.com/" target="blank">Creative Tim</a> for a better web.
+       
+        </small> </h6>
+      </div>
+    </div>
+  </footer>
+{% endblock %}

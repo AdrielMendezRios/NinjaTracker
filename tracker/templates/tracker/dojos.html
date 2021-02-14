@@ -1,0 +1,36 @@
+{% extends 'tracker/index.html' %}
+
+{% block title %}
+   Ninja Tracker
+{% endblock title %}
+
+{% block subtitle %}
+    Dojos
+{% endblock subtitle %}
+
+
+{% block content %}
+{% if dojo_list %}
+
+
+
+<div class="card">
+  <div class="card-header card-header-text card-header-primary">
+    <h4 class="card-title">Dojos</h4>
+    <p class="category">Choose Your Discipline</p>
+  </div>
+  {% for dojo, ninjas in ninjas_in_dojo.items %}
+  <div class="card-body">
+      <a href="{% url 'tracker:dojo' dojo.id%}" class="list-group-item list-group-item-action">{{dojo.dojo_name}}
+    <span class="badge badge-primary badge-pill ml-auto">{{ ninjas }}</span>Ninjas
+  </a>
+  </div>
+  {% endfor %}
+</div>
+
+  
+{% else %}
+<p>Does not exist</p>
+{% endif %}
+{% endblock %}
+

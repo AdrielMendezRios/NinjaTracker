@@ -1,0 +1,46 @@
+{% extends 'tracker/base.html' %}
+
+{% load static %}
+
+{% block title %}
+        Ninja Tracker
+{% endblock title %}
+
+{% block subtitle %}
+    HI-YA!
+{% endblock subtitle %}
+
+{% block content %}
+
+{% block form %}{% endblock %}
+<div class="row">
+    {% if dojo_list %}
+    <div class=" mr-auto">
+        <a href="{% url 'tracker:dojos'%}" id="card-links">
+            <div class="card " >
+                <div class="card-body">
+                    <h4 class="card-title text-center">Dojos</h4>
+                    <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
+                    <img src="{% static 'tracker/images/dojo1.png'%}" alt="" >
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endif %}
+    {% if ninja_list %}
+    <div class="mr-auto ml-auto">
+        <a href="{% url 'tracker:ninjas' %}" id="card-links">
+            <div class="card " >
+                <div class="card-body">
+                    <h4 class="card-title text-center">Ninjas</h4>
+                    <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
+                    <img src="{% static 'tracker/images/ninja.png'%}" alt="" width="200px" height="281px">
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,43 @@
+{% extends 'tracker/index.html' %}
+{% block form %}
+<h1> Are you sure you want to delete this session</h1>
+{% comment %} {% with ninja=session.ninja%} {% endcomment %}
+<div class='row'>
+    <div class='col-md-12'>
+        <div class="card" style="max-width: 100rem;">
+        <div class="card-header card-header-text card-header-primary">{{session.session_date}}</div>
+        <div class="card-body">
+            <h4 class="card-title">{{session.session_duration}}hrs.</h4>
+            <p class="card-text">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">Worked On</th>
+                    <th scope="col">Sensei Notes</th>
+                    <th scope="col">Sensei</th>
+                    <th scope="col">Dojo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-light">
+                    <th scope="row">{{session.session_assignment}}</th>
+                    <td>{{session.session_notes}}</td>
+                    <td>{{session.session_sensei}}</td>
+                    <td>{{session.session_dojo}}</td>
+                    </tr>
+                </tbody>
+            </table> 
+    </div>
+    </div>
+</div>
+    <hr>
+    <div class='row'>
+        <div class='col-md-12'>
+            <form action="{% url 'tracker:session_delete' session.id %}" method="POST">
+                {% csrf_token %}
+                <input class="btn btn-primary" type="submit" value="Delete">
+            </form>
+            <a href="{% url 'tracker:ninja' session.ninja.id %}">cancel</a>
+        </div>
+    </div>
+{% endblock %}

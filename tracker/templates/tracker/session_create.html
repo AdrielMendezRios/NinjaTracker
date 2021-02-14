@@ -1,0 +1,86 @@
+{% extends 'tracker/index.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+        {{ninja.ninja_name|title}}
+{% endblock title %}
+
+{% block subtitle %}
+    {{ninja.current_belt}} Belt
+{% endblock subtitle %}
+
+
+{% block form %}
+<form method="POST">
+    {% csrf_token%}
+        {{ form|crispy }}
+
+    <input class="btn btn-primary" type="submit" value="create Session">  
+</form>
+{% endblock %}
+
+       {% comment %}          <div class="form-group">
+        <label>Dojo</label>
+        <div class="form-check form-check-radio">
+            <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="{{form.session_dojo.name}}" id="exampleRadios1" value="Wake Forest" checked>
+                Wake Forest
+                <span class="circle">
+                    <span class="check"></span>
+                </span>
+            </label>
+        </div>
+        <div class="form-check form-check-radio">
+            <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="{{form.session_dojo.name}}" id="exampleRadios2" value="Holly Springs" >
+                Holly Springs
+                <span class="circle">
+                    <span class="check"></span>
+                </span>
+            </label>
+        </div>
+        <div class="form-check form-check-radio">
+            <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="{{form.session_dojo.name}}" id="exampleRadios2" value="Raleigh" >
+                Raleigh
+                <span class="circle">
+                    <span class="check"></span>
+                </span>
+            </label>
+        </div>       
+    </div>
+    <div class="form-group">
+    <label>Duration</label>
+        <div class="form-check form-check-radio">
+            <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="{{form.session_duration.name}}" id="exampleRadios1" value="1" checked>
+                One Hour
+                <span class="circle">
+                    <span class="check"></span>
+                </span>
+            </label>
+        </div>
+        <div class="form-check form-check-radio">
+            <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="{{form.session_duration.name}}" id="exampleRadios2" value="2" >
+                Two Hours
+                <span class="circle">
+                    <span class="check"></span>
+                </span>
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="session_sensei">{{form.session_sensei.label}}</label>
+        <input type="text" class="form-control" id="session_sensei"  name="{{form.session_sensei.name}}">
+    </div>
+    <div class="bmd-form-group form-group">
+        <label for="session_assignment" >{{form.session_assignment.label}}</label>
+        <input type="text" class="form-control" id="session_assignment" aria-describedby="emailHelp"  name="{{form.session_assignment.name}}">
+    </div>
+
+    <div class="form-group">
+        <label for="session_notes">{{form.session_notes.label}}</label>
+        <textarea type="textarea" class="form-control" id="session_notes" name="{{form.session_notes.name}}" rows="4"></textarea>
+    </div>{% endcomment %}

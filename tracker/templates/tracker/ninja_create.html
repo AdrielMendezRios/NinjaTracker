@@ -1,0 +1,21 @@
+{% extends 'tracker/index.html' %}
+
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+        Create Ninja
+{% endblock title %}
+
+{% block subtitle %}
+    <h3>Hi-Ya!</h3>
+{% endblock subtitle %}
+
+{% block form %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <hr>
+    <input class="btn btn-primary" type="submit" value="Add Ninja">
+</form>
+{% endblock %}

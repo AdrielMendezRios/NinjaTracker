@@ -1,0 +1,30 @@
+.packageTag {
+    margin-top: .25rem !important;
+    padding-top: .25rem !important;;
+}
+
+.dojoCard {
+    margin-right: 6.25rem !important;
+    margin-left: 4.25rem !important;
+}
+
+.ninjaCard {
+    margin-right: 6.25rem !important;
+    margin-left: 4.25rem !important;
+}
+
+.ninjaCard a div div {
+    padding-left: 6.25rem !important;
+    padding-right: 6.25rem !important;
+    padding-bottom: 1.25rem !important;
+}
+
+#card-links {
+    text-decoration: none;
+}
+
+#bg {
+    background-image: "{% static 'tracker/assets/img/bg3.jpg' %}";
+}
+
+ul {list-style:none}

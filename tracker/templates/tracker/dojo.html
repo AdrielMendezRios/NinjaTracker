@@ -1,0 +1,87 @@
+{% extends 'tracker/index.html' %}
+
+{% block title %}
+        {{dojo.dojo_name}}
+{% endblock title %}
+
+{% block subtitle %}
+  {% if dojo.dojo_name == "Raleigh"%}
+      Home of the Rěnzhě
+  {%else%}
+      Home of the Shinobi
+  {% endif %}
+{% endblock subtitle %}
+
+
+
+{% block content %}
+{% if dojo %}
+  {% if user.is_lead or user.is_director %}
+<a style="color:white;text-decoration:none;" href="{% url 'tracker:register'%}" ><button type="button" class="btn btn-danger btn-lg">Register a New Sensei</button></a>
+{% endif %}
+<a style="color:white;text-decoration:none;" href="{% url 'tracker:ninja-create' dojo.id %}" ><button type="button" class="btn btn-secondary btn-lg">Add New Ninja to Dojo</button></a>
+<hr>
+
+
+{% if in_dojo %}
+
+<h2 class="h2 title">{{in_dojo|length}} Ninjas Currently in {{dojo.dojo_name}}</h2>
+<div class="row col-12">
+{% for session in in_dojo %}
+ 
+      <div class="card col-5 mr-auto ml-auto">
+        <a href="{% url 'tracker:ninja' session.ninja.id %}">
+        <div class="card-header card-header-danger">
+            <h4 class="card-title">{{session.ninja.ninja_name|title}} - <small class="subtitle text-white">{{session.ninja.current_belt}} Belt</small></h4>
+            <p class="category">started {{session.session_date.time}} for {{session.session_duration}} {% if session.session_duration > 1 %} hrs. {% else %} hr {% endif %}</p>
+        </div></a>
+        <div class="card-body">
+              <p class="card-text">working on: {{session.session_assignment}}</p>
+              <hr>
+              <a href="{% url 'tracker:session_update' session.id %}"><button type="button" class="btn btn-sm btn-round btn-info ml-auto">Edit</button></a>
+              <a href="{% url 'tracker:session_delete' session.id %}"><button type="button" class="btn btn-sm btn-round btn-danger ml-auto">Delete</button></a>
+        </div>
+        
+    </div>
+
+{% endfor %}
+</div>
+{% endif%}
+
+<br>
+<div class="card">
+  <div class="card-header card-header-text card-header-primary">
+    <h4 class="card-title">Ninjas</h4>
+    <p class="category">Choose Your Pupil</p>
+  </div>
+  {% for ninja in page.object_list %}
+  <div class="card-body">
+    <a href="{% url 'tracker:ninja' ninja.id%}" class="list-group-item list-group-item-action">{{ninja.ninja_name|title}} <small class="text-muted ml-auto">{{ninja.dojo.dojo_name}}</small></a>
+  </div>
+  {% endfor %}
+</div>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item {% if not previous_page_url %} disabled {% endif%}">
+      <a class="page-link" href="{{previous_page_url}}" tabindex="-1">Previous</a> 
+    </li>
+    {% for n in page.paginator.page_range %}
+      {% if page.number == n %}
+        <li class="page-item active">
+          <a class="page-link"  href="?page={{n}}">{{n}}</a> 
+        </li>
+      {% elif n > page.number|add:-5 and n < page.number|add:5%}
+      <li class="page-item">
+        <a class="page-link" href="?page={{n}}">{{n}}</a> 
+      </li>
+      {% endif%}
+    {% endfor %}
+    <li class="page-item {% if not next_page_url %} disabled {% endif%}">
+      <a class="page-link" href="{{next_page_url}}">Next</a> 
+    </li>
+  </ul>
+</nav>
+{% else %}
+<p>Does not exist</p>
+{% endif %}
+{% endblock %}

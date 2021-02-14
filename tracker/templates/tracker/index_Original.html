@@ -1,0 +1,33 @@
+
+{% load static %}
+{% load bootstrap_themes %}
+{% bootstrap_styles theme='default' type='min.css' %}
+{% bootstrap_styles theme='minty' type='css' %}
+{% bootstrap_styles theme='united' type='less' %}
+{% bootstrap_script use_min=True %}
+    <h1>Welcome to Ninja Tracker</h1>
+<div>
+    {% if dojo_list %}
+    <h2>Select a dojo</h2>
+        <ul>
+            {% for dojo in dojo_list %}
+            <li><a href="{% url 'tracker:dojo' dojo.id %}">{{dojo.dojo_name}}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No dojos available-index.html</p>
+    {% endif %}
+</div>
+<div>
+
+    {% if ninja_list %}
+    <h2>All our Ninjas!</h2>
+    <ul>
+        {% for ninja in ninja_list%}
+            <li><a href="{% url 'tracker:ninja' ninja.id %}">{{ ninja.ninja_name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+    <p>No Ninjas Available</p>
+    {% endif %}
+</div>

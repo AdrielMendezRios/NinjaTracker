@@ -1,0 +1,1 @@
+web: gunicorn studentTracker.wsgi --log-file - --log-level debug

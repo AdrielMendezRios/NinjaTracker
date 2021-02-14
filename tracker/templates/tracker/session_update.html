@@ -1,0 +1,21 @@
+{% extends 'tracker/index.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+       <a class=""  style="color:white !important;"href="{% url 'tracker:ninja' session.ninja.id%}" {{session.ninja.ninja_name|title}}
+> {{session.ninja.ninja_name|title}}</a>
+{% endblock title %}
+
+{% block subtitle %}
+    {{session.ninja.current_belt}} Belt
+{% endblock subtitle %}
+
+
+{% block form %}
+<form method="POST">
+    {% csrf_token%}
+        {{ form|crispy }}
+    <input class="btn btn-primary" type="submit" value="update Session">  
+</form>
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends 'tracker/index.html' %}
+
+
+{% block title %}
+        {{ninja.ninja_name|title}}
+{% endblock title %}
+
+{% block subtitle %}
+    {{ninja.current_belt}} Belt
+{% endblock subtitle %}
+
+
+{% block content %}
+{% if ninja %}
+<div class="row col-12">
+  <h1 class="h1 col-11 text-left">{{ninja.ninja_name|title}} </h1>
+  <div class="ml-auto"><a href="{% url 'tracker:ninja-update' ninja.id %}"><button type="button" class="btn btn-info btn-sm ">Edit Ninja</button></a></div>
+  
+</div>
+<div class="row">
+<div class="col-4" style="margin-left:0%;">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">{{ninja.ninja_package}}</h4>
+      <p><small class="text-muted">Ninja since: {{ninja.date_registered.date}}</small></p>
+      <h6 class="card-subtitle mb-2 text-muted">Hours this month: {{hrsThisMonth}} {% if hrsThisMonth == 1%} hour {% else %} hours {% endif %}</h6>
+      <p class="card-text">Last worked on: {{workingOn|title}}</p>
+      {% if ninja.current_belt == "White" %}
+        <p class="card-text">Scratch username: </p>
+        <p class="card-text">Scratch password: </p>
+      {% endif %}
+      <a href="{% url 'tracker:ninja-info'  ninja.id %}" class="card-link">Ninja Details</a>
+    </div>
+  </div>
+</div>
+</div>
+<div>
+<hr>
+    <a href="{% url 'tracker:session_create' ninja.id %}"><button type="button" class="btn btn-info btn-sm">Add Session</button></a>
+    <br><br>
+    {% for session in page.object_list %}
+        {% comment %} <ul>
+            <li>{{session.session_date}}<a href="{% url 'tracker:session-update' session.id %}"> Edit </a></li>
+        </ul> {% endcomment %}
+    
+    <div class="card" style="max-width: 100rem;">
+        <div class="card-header card-header-text card-header-primary">{{session.session_date}}</div>
+        <div class="card-body">
+            <h4 class="card-title">{{session.session_duration}}hrs.</h4>
+            <p class="card-text">
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">{{firstName|title}} Worked On</th>
+                    <th scope="col">Sensei Notes</th>
+                    <th scope="col">Sensei</th>
+                    <th scope="col">Dojo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-light">
+                    <th scope="row">{{session.session_assignment|title}}</th>
+                    <td>{{session.session_notes}}</td>
+                    <td>{{session.session_sensei|title}}</td>
+                    <td>{{session.session_dojo}}</td>
+                    </tr>
+                </tbody>
+            </table> 
+            <a href="{% url 'tracker:session_update' session.id %}"><button type="button" class="btn btn-warning">Edit</button></a>
+            <a href="{% url 'tracker:session_delete' session.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
+            </p>
+    </div>
+</div>
+<br>
+{% endfor %}
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item {% if not previous_page_url %} disabled {% endif%}">
+      <a class="page-link" href="{{previous_page_url}}" tabindex="-1">Previous</a> 
+    </li>
+    {% for n in page.paginator.page_range %}
+      {% if page.number == n %}
+        <li class="page-item active">
+          <a class="page-link"  href="?page={{n}}">{{n}}</a> 
+        </li>
+      {% elif n > page.number|add:-5 and n < page.number|add:5%}
+      <li class="page-item">
+        <a class="page-link" href="?page={{n}}">{{n}}</a> 
+      </li>
+      {% endif%}
+    {% endfor %}
+    <li class="page-item {% if not next_page_url %} disabled {% endif%}">
+      <a class="page-link" href="{{next_page_url}}">Next</a> 
+    </li>
+  </ul>
+</nav>
+</div>
+{% else %}
+    <p>Ninja Not found</p>
+{% endif %}
+{% endblock %}
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Type</th>
+      <th scope="col">Column heading</th>
+      <th scope="col">Column heading</th>
+      <th scope="col">Column heading</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-light">
+      <th scope="row">Light</th>
+      <td>Column content</td>
+      <td>Column content</td>
+      <td>Column content</td>
+    </tr>
+  </tbody>
+</table> 

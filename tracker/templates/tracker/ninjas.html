@@ -1,0 +1,50 @@
+{% extends 'tracker/index.html' %}
+
+{% block title %}
+   Ninja Tracker
+{% endblock title %}
+
+{% block subtitle %}
+   Ninjas
+{% endblock subtitle %}
+
+
+{% block content %}
+{% if ninja_list or ninjas %}
+<div class="card">
+  <div class="card-header card-header-text card-header-primary ">
+    <h4 class="card-title">Ninjas</h4>
+    <p class="category">Choose Your Pupil</p>
+  </div>
+  {% for ninja in page.object_list %}
+  <div class="card-body">
+    <a href="{% url 'tracker:ninja' ninja.id%}" class="list-group-item list-group-item-action">{{ninja.ninja_name|title}} <small class="text-muted ml-auto">{{ninja.dojo.dojo_name}}</small></a>
+  </div>
+  {% endfor %}
+</div>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item {% if not previous_page_url %} disabled {% endif%}">
+      <a class="page-link" href="{{previous_page_url}}" tabindex="-1">Previous</a> 
+    </li>
+    {% for n in page.paginator.page_range %}
+      {% if page.number == n %}
+        <li class="page-item active">
+          <a class="page-link"  href="?page={{n}}">{{n}}</a> 
+        </li>
+      {% elif n > page.number|add:-5 and n < page.number|add:5%}
+      <li class="page-item">
+        <a class="page-link" href="?page={{n}}">{{n}}</a> 
+      </li>
+      {% endif%}
+    {% endfor %}
+    <li class="page-item {% if not next_page_url %} disabled {% endif%}">
+      <a class="page-link" href="{{next_page_url}}">Next</a> 
+    </li>
+  </ul>
+</nav>
+{% else %}
+    <h2 class="h2">Sorry, No Ninja Found! :(</h2>  
+{% endif %}
+{% endblock %}
+

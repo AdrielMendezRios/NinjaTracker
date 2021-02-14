@@ -1,0 +1,101 @@
+{% extends 'tracker/index.html' %}
+
+
+{% block title %}
+        {{ninja.ninja_name|title}}
+{% endblock title %}
+
+{% block subtitle %}
+    Details
+{% endblock subtitle %}
+
+
+{% block content %}
+{% if ninja %}
+<div class="row col-12">
+<h1 class="h1 col-11 text-left"><a href="{% url 'tracker:ninja' ninja.id %}" >{{ninja.ninja_name|title}}</a></h1>
+    <div class="card col-4 ml-auto mr-auto">
+            <div class="card-header card-header-danger">
+            <h2 class="card-title">Details</h2>
+            
+        </div>
+      <div class="card-body">
+        {% for key, value in ninja_data %}
+          <div class="center-left ">
+            <h5 class="card-title mr-auto text-left">{{key|title}}</h5>
+            <p class="card-text  mr-auto text-left">{{value}}</p>
+          </div>
+
+        {% endfor %}
+      </div>
+    </div>
+    <div class="card col-4  mr-auto ml-auto">
+        <div class="card-header card-header-danger">
+            <h2 class="card-title">Sessions</h2>    
+        </div>
+      <div class="card-body">
+      <table class="table table-hover col-8 ml-auto mr-auto">
+      {% for dct in page.object_list %}
+          
+          <thead>
+          
+              <tr>
+              <th scope="col">session dates</th>
+              <th scope="col">duration</th>
+              </tr>
+          </thead>
+          {% for session in dct.sessions %}
+           <tbody>
+              
+                
+                <tr class="table-light ">
+                <td><a href="{% url 'tracker:session_update' session.id %}">{{session.session_date.date}}</a></td>
+                <td>{{session.session_duration}} hrs</td>
+                </tr>
+              
+          </tbody> 
+          {% endfor %}
+          <tr><th scope="col" class="text-left">{{dct.hours}} hours total </th></tr>
+          {% endfor %} 
+          
+          </table>
+
+      </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item {% if not previous_page_url %} disabled {% endif%}">
+        <a class="page-link" href="{{previous_page_url}}" tabindex="-1">Previous</a> 
+      </li>
+      {% for n in page.paginator.page_range %}
+        {% if page.number == n %}
+          <li class="page-item active">
+            <a class="page-link"  href="?page={{n}}">{{n}}</a> 
+          </li>
+        {% elif n > page.number|add:-5 and n < page.number|add:5%}
+        <li class="page-item">
+          <a class="page-link" href="?page={{n}}">{{n}}</a> 
+        </li>
+        {% endif%}
+      {% endfor %}
+      <li class="page-item {% if not next_page_url %} disabled {% endif%}">
+        <a class="page-link" href="{{next_page_url}}">Next</a> 
+      </li>
+    </ul>
+  </nav>
+</div>
+{% else %}
+    <p>Ninja Not found</p>
+{% endif %}
+{% endblock %}
+
