@@ -18,13 +18,13 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
-# SECURE_SSL_REDIRECT = True
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
-SECURE_SSL_REDIRECT = False
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SECURE = False
+# SECURE_SSL_REDIRECT = False
+# CSRF_COOKIE_SECURE = False
+# SESSION_COOKIE_SECURE = False
 
 
 
@@ -32,7 +32,7 @@ SESSION_COOKIE_SECURE = False
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '(y#+^l(@3r%-)1bbb1p=7%)#%9yu!wmioeec&ldpb=@=&0j5r('
+# SECRET_KEY = '(y#+^l(@3r%-)1bbb1p=7%)#%9yu!wmioeec&ldpb=@=&0j5r('
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
