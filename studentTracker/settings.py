@@ -32,16 +32,16 @@ SESSION_COOKIE_SECURE = True
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = '(y#+^l(@3r%-)1bbb1p=7%)#%9yu!wmioeec&ldpb=@=&0j5r('
+# SECRET_KEY = '(y#+^l(@3r%-)1bbb1p=7%)#%9yu!wmioeec&ldpb=@=&0j5r(' OLD KEY
 SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
-    # 'localhost',
-    # 'localhost:8000',
-    # '127.0.0.1:8000',
-    # 'ninjatracker.herokuapp.com'
+    'localhost',
+    'localhost:8000',
+    '127.0.0.1:8000',
+    'ninjatracker.herokuapp.com'
 ]
 
 
