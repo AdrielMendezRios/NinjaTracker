@@ -48,7 +48,6 @@ class IndexView(generic.ListView):
 
 
 @login_required(login_url='tracker:login')
-
 def search(request):
     search_query = request.GET.get('search', '')
 
