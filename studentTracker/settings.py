@@ -33,7 +33,7 @@ SESSION_COOKIE_SECURE = True
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = '(y#+^l(@3r%-)1bbb1p=7%)#%9yu!wmioeec&ldpb=@=&0j5r('
-
+SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
