@@ -18,7 +18,9 @@ import time
 from .models import Dojo, Ninja, Session, Employee
 from .forms import SessionForm, NinjaForm, EmployeeCreationForm
 from .decorators import *
+import logging
 
+logger = logging.getLogger(__name__)
 
 utc = pytz.UTC
 et = pytz.timezone('US/Eastern')
@@ -68,7 +70,8 @@ def search(request):
 @allowed_users(allowed_roles=['admin','lead'])
 def registerPage(request):
     form = EmployeeCreationForm()
-
+    logger.info()
+    logger.error()
     if request.method == 'POST':
         form = EmployeeCreationForm(request.POST)
         if form.is_valid():
