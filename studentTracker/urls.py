@@ -18,6 +18,10 @@ from django.urls import path, include
 from django.views.i18n import JavaScriptCatalog
 
 
+admin.site.site_header = 'Ninja Tracker Administration'
+admin.site.site_title = 'Ninja Tracker Admin'
+admin.site.index_title = 'Admin site'
+
 urlpatterns = [
     path('tracker/', include('tracker.urls')),
     path('jsi18n', JavaScriptCatalog.as_view(), name='js-catlog'),
