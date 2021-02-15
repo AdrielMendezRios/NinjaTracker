@@ -64,6 +64,7 @@ def search(request):
     pagination(result, request, context, 10)
     return  render(request, "tracker/ninjas.html", context)
 
+@login_required(login_url='tracker:login')
 @allowed_users(allowed_roles=['admin','lead'])
 def registerPage(request):
     form = EmployeeCreationForm()
