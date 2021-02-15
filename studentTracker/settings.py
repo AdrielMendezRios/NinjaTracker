@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-
+from aws_s3_creds import credentials as creds
 from pathlib import Path
 import os
 
@@ -33,7 +33,7 @@ SESSION_COOKIE_SECURE = True
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = '(y#+^l(@3r%-)1bbb1p=7%)#%9yu!wmioeec&ldpb=@=&0j5r(' OLD KEY
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY') #creds['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-
+    'favicon',
     'storages',
 ]
 
