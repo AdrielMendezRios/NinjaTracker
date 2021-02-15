@@ -69,16 +69,21 @@ def search(request):
 @login_required(login_url='tracker:login')
 @allowed_users(allowed_roles=['admin','lead'])
 def registerPage(request):
-    form = EmployeeCreationForm()
-    logger.info()
-    logger.error()
-    if request.method == 'POST':
-        form = EmployeeCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('tracker:register')
-    context = {'form':form,  'user' : get_user(request)}
-    return render(request, 'tracker/register.html', context)
+    try:
+        form = EmployeeCreationForm()
+ 
+        if request.method == 'POST':
+            form = EmployeeCreationForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('tracker:register')
+        context = {'form':form,  'user' : get_user(request)}
+        return render(request, 'tracker/register.html', context)
+    except Exception as e:
+        logger.info(e)
+        logger.error(e)
+        logger.debug(e)
+        
 
 
 @unauthenticated_user
