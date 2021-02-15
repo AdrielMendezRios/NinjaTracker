@@ -18,9 +18,7 @@ from django.urls import path, include
 from django.views.i18n import JavaScriptCatalog
 
 
-admin.site.site_header = 'Ninja Tracker Administration'
-admin.site.site_title = 'Ninja Tracker Admin'
-admin.site.index_title = 'Admin site'
+
 
 urlpatterns = [
     path('tracker/', include('tracker.urls')),
@@ -28,3 +26,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
 ]
+
+admin.site.site_header = 'Ninja Tracker Administration'
+admin.site.site_title = 'Ninja Tracker Admin'
+admin.site.index_title = 'Admin site'
+admin.site.site_url = '/tracker'
