@@ -61,6 +61,7 @@ def search(request):
     print(result)
     context['ninja_list'] = result
     context['user'] = get_user(request)
+    pagination(result, request, context, 10)
     return  render(request, "tracker/ninjas.html", context)
 
 @allowed_users(allowed_roles=['admin','lead'])
