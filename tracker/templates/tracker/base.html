@@ -11,6 +11,7 @@
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <link rel="icon" href="{% static 'tracker/favicon1.ico' %}" type="image" />
   <!-- Material Kit CSS -->
   <link href="{% static 'tracker/assets/css/material-kit.css' %}" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="{% static 'tracker/myStyle.css' %}">
@@ -71,7 +72,7 @@
     </ul>
     <ul class="navbar-nav ml-auto mr-3">
         <li class="nav-item ">
-        <div class="inline" ><a style="left-padding:1rem;" class="inline ml-4">Hey, {{user.username|title}} </a><a href="{% url 'tracker:logout' %}" ><small>Logout</small></a></div>
+        <div class="inline" ><a class="inline ml-4">Hey, {{user.username|title}} </a><a href="{% url 'tracker:logout' %}" ><small>Logout</small></a></div>
     </li>
 </ul>
 {% endif %}
