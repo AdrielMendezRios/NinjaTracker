@@ -30,7 +30,7 @@
 <div class="row col-12">
 {% for session in in_dojo %}
  
-      <div class="card col-5 mr-auto ml-auto">
+      <div class="card col-md-5 col-sm-12 mr-auto ml-auto">
         <a href="{% url 'tracker:ninja' session.ninja.id %}">
         <div class="card-header card-header-danger">
             <h4 class="card-title">{{session.ninja.ninja_name|title}} - <small class="subtitle text-white">{{session.ninja.current_belt}} Belt</small></h4>

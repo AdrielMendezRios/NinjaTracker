@@ -71,7 +71,7 @@
     </ul>
     <ul class="navbar-nav ml-auto mr-3">
         <li class="nav-item ">
-        <div class="inline"><a class="inline">Hey, {{user.username|title}} </a><a href="{% url 'tracker:logout' %}" ><small>Logout</small></a></div>
+        <div class="inline" ><a style="left-padding:1rem;" class="inline ml-4">Hey, {{user.username|title}} </a><a href="{% url 'tracker:logout' %}" ><small>Logout</small></a></div>
     </li>
 </ul>
 {% endif %}

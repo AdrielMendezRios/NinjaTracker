@@ -14,14 +14,14 @@
 {% if ninja %}
 <div class="row col-12">
 <h1 class="h1 col-11 text-left"><a href="{% url 'tracker:ninja' ninja.id %}" >{{ninja.ninja_name|title}}</a></h1>
-    <div class="card col-4 ml-auto mr-auto">
+    <div class="card col-lg-12 ml-auto mr-auto">
             <div class="card-header card-header-danger">
             <h2 class="card-title">Details</h2>
             
         </div>
       <div class="card-body">
         {% for key, value in ninja_data %}
-          <div class="center-left ">
+          <div style="display:inline-block;padding:1rem;" class="">
             <h5 class="card-title mr-auto text-left">{{key|title}}</h5>
             <p class="card-text  mr-auto text-left">{{value}}</p>
           </div>
@@ -29,7 +29,7 @@
         {% endfor %}
       </div>
     </div>
-    <div class="card col-4  mr-auto ml-auto">
+    <div class="card col-lg-12  mr-auto ml-auto">
         <div class="card-header card-header-danger">
             <h2 class="card-title">Sessions</h2>    
         </div>
