@@ -16,9 +16,9 @@
 
 {% block content %}
 {% if dojo %}
-  {% comment %} {% if user.is_lead or user.is_director %}
+   {% if user.is_lead or user.is_director %}
 <a style="color:white;text-decoration:none;" href="{% url 'tracker:register'%}" ><button type="button" class="btn btn-danger btn-lg">Register a New Sensei</button></a>
-   {% endcomment %}
+   
 {% endif %}
 <a style="color:white;text-decoration:none;" href="{% url 'tracker:ninja-create' dojo.id %}" ><button type="button" class="btn btn-secondary btn-lg">Add New Ninja to Dojo</button></a>
 <hr>
