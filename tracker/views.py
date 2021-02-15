@@ -76,7 +76,7 @@ def registerPage(request):
             form = EmployeeCreationForm(request.POST)
             if form.is_valid():
                 form.save()
-                return redirect('tracker:register')
+                return redirect('tracker:login')
         context = {'form':form,  'user' : get_user(request)}
         return render(request, 'tracker/register.html', context)
     except Exception as e:
