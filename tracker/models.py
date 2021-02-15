@@ -160,7 +160,7 @@ class Employee(User):
     home_dojo = models.ForeignKey(Dojo, on_delete=CASCADE, default=1)
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email',]
+    REQUIRED_FIELDS = ['email']
 
     objects = EmployeeManager()
 
