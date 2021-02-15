@@ -22,5 +22,5 @@ urlpatterns = [
     path('tracker/', include('tracker.urls')),
     path('jsi18n', JavaScriptCatalog.as_view(), name='js-catlog'),
     path('admin/', admin.site.urls),
-    path('/favicon.ico', include('favicon.urls'))
+    
 ]
