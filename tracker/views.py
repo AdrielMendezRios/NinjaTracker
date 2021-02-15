@@ -78,7 +78,7 @@ def registerPage(request):
                 form.save()
                 return redirect('tracker:login')
         context = {'form':form,  'user' : get_user(request)}
-        return render(request, 'tracker/register.html', context)
+        return render(request, 'tracker/Register.html', context)
     except Exception as e:
         logger.info(e)
         logger.error(e)
