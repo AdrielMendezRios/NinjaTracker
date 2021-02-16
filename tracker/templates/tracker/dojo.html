@@ -50,7 +50,6 @@
 {% endif%}
 <br>
 <hr>
-<br>
 {% if user.is_director or user.is_lead%}
 {% if unapproved_sessions|length > 0%}
 <h2 class="h2 title">{{unapproved_sessions|length}} unapproved sessions</h2>
