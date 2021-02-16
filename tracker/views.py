@@ -328,9 +328,8 @@ def session_update(request, pk):
         form = SessionForm(request.POST, instance=session)
         if form.is_valid():
             if user.is_director:
-                form.session_is_approved = True
-            else:
-                form.session_is_approved = True
+                session.session_is_approved = True
+                session.save()
             print(form)
             form.save()
             ninja = Ninja.objects.get(ninja_name=session.ninja.ninja_name)
