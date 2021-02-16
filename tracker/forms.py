@@ -30,7 +30,7 @@ class SessionForm(ModelForm):
     # session_date = DateTimeField(widget=HiddenInput)
     class Meta:
         model = Session
-        exclude = ['session_date']
+        exclude = ['session_date', 'session_is_approved']
         # fields = '__all__'
         widgets = {
             'session_date': HiddenInput(),
@@ -38,7 +38,7 @@ class SessionForm(ModelForm):
             'session_sensei': TextInput(attrs={'class':'form-control'}),
             'session_duration': Select(attrs={'class':'form-control'},choices=DURATION_CHOICES),
             'session_assignment': TextInput(attrs={'class':'form-control'}),
-            'session_notes': Textarea(attrs={'class': 'form-control', 'rows':3}),
+            'session_notes': Textarea(attrs={'class': 'form-control', 'rows':3, 'placeholder':_('add notes here')}),
             'session_dojo': Select(attrs={'class': 'form-control'})
         }
     def clean_date(self, *args, **kwargs):

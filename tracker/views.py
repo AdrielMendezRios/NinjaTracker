@@ -70,7 +70,7 @@ def search(request):
 @allowed_users(allowed_roles=['admin','lead'])
 def registerPage(request):
     try:
-        form = EmployeeCreationForm()
+        form = EmployeeCreationForm(initial={'username':'username'})
  
         if request.method == 'POST':
             form = EmployeeCreationForm(request.POST)
@@ -149,20 +149,42 @@ class DojoDetailView(generic.DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(DojoDetailView, self).get_context_data(*args, **kwargs)
         ninjas = Ninja.objects.filter(dojo=self.object.id).order_by('-id')
+        context['form'] = SessionForm()
         in_dojo = []
+        unapproved_sessions = []
         for ninja in ninjas:
             if Session.objects.filter(ninja=ninja.id):
                 todays_session = Session.objects.filter(ninja=ninja.id).latest('session_date')
                 todays_session.session_date = todays_session.session_date.astimezone(et)
-                if todays_session.session_date.date() == datetime.now().date() and session_countdown(todays_session):
-                    in_dojo.append(todays_session) 
+                if todays_session.session_date.date() == datetime.now().date():
+                    if session_countdown(todays_session):
+                        in_dojo.append(todays_session)
+                    if not todays_session.session_is_approved:
+                        unapproved_sessions.append(todays_session)
+        print(dir(self.request))
+        print(self.request.path_info)
+
         context['in_dojo'] = in_dojo
         context['ninjas'] = ninjas
+        context['unapproved_sessions'] = unapproved_sessions
         pagination(ninjas, self.request, context, pg_amount=10)
         context['user'] = get_user(self.request)
 
         return context
 
+@login_required(login_url='tracker:login')
+@allowed_users(allowed_roles=['admin','lead'])
+def session_approve(request, pk):
+    print(request.path_info)
+    session = Session.objects.get(id=pk)
+    user = get_user(request)
+    if user.is_director or user.is_lead:
+        session.session_is_approved = True
+        session.save()
+    dojo = session.session_dojo
+    return redirect(reverse('tracker:dojo', args=[dojo.id]))
+    
+    
 """               end of DOJO                     """
 
 """               NINJA                     """
@@ -277,7 +299,7 @@ def ninja_update(request, pk):
 def session_create(request, pk):
     ninja = Ninja.objects.get(id=pk)
     user = get_user(request)
-    form = SessionForm(initial={'ninja':ninja, 'session_sensei': user.username, 'session_dojo': user.home_dojo})
+    form = SessionForm(initial={'ninja':ninja, 'session_notes':'add notes here', 'session_sensei': user.username, 'session_dojo': user.home_dojo})
 
     context = {'form': form, 'ninja': ninja,  'user': user}
     
@@ -297,19 +319,24 @@ def session_create(request, pk):
 @login_required(login_url='tracker:login')
 @allowed_users(allowed_roles=['admin','lead','sensei'])
 def session_update(request, pk):
-    
-
     session = Session.objects.get(id=pk)
     form = SessionForm(instance=session)
+
+    user = get_user(request)
     if request.method == 'POST':
         # print("printing request:", request.POST)
         form = SessionForm(request.POST, instance=session)
         if form.is_valid():
+            if user.is_director:
+                form.session_is_approved = True
+            else:
+                form.session_is_approved = True
+            print(form)
             form.save()
             ninja = Ninja.objects.get(ninja_name=session.ninja.ninja_name)
             return redirect(reverse('tracker:dojo', args=[session.session_dojo.id]))
     
-    context = {'form': form, 'session':session,  'user': get_user(request)}
+    context = {'form': form, 'session':session,  'user': user}
     return render(request, 'tracker/session_update.html', context)
 
 @login_required(login_url='tracker:login')
@@ -337,6 +364,7 @@ def session_delete(request, pk):
 
 
 """ Helper Functions"""
+
 
 def calc_hours_in_month(reg_date,sessions_this_month):
     hrs_this_month = 0
@@ -436,6 +464,7 @@ def session_countdown(obj):
 def get_user(request):
     if request.user:
         user = Employee.objects.get(pk=request.user.id)
+        print(user.is_director)
         return user
     return None
 

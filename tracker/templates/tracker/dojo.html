@@ -1,5 +1,5 @@
 {% extends 'tracker/index.html' %}
-
+{% load crispy_forms_tags %}
 {% block title %}
         {{dojo.dojo_name}}
 {% endblock title %}
@@ -48,8 +48,35 @@
 {% endfor %}
 </div>
 {% endif%}
-
 <br>
+{% if user.is_director or user.is_lead%}
+{% if unapproved_sessions|length > 0%}
+<h2 class="h2 title">{{unapproved_sessions|length}} unapproved sessions</h2>
+<div class="row col-12">
+{% for session in unapproved_sessions %}
+ 
+      <div class="card col-md-5 col-sm-12 mr-auto ml-auto">
+        <a href="{% url 'tracker:ninja' session.ninja.id %}">
+        <div class="card-header card-header-info">
+            <h4 class="card-title">{{session.ninja.ninja_name|title}} - <small class="subtitle text-white">{{session.ninja.current_belt}} Belt</small></h4>
+            <p class="category">started {{session.session_date.time}} for {{session.session_duration}} {% if session.session_duration > 1 %} hrs. {% else %} hr {% endif %}</p>
+        </div></a>
+        <div class="card-body">
+              <p class="card-text">working on: {{session.session_assignment}}</p>
+              <p class="card-text">working on: {{session.session_notes}}</p>
+              <hr>
+              <a href="{% url 'tracker:session_update' session.id %}"><button type="button" class="btn btn-sm btn-round btn-info ml-auto">Edit</button></a>
+              <a href="{% url 'tracker:session_delete' session.id %}"><button type="button" class="btn btn-sm btn-round btn-danger ml-auto">Delete</button></a>
+              <a href="{% url 'tracker:session_approve' session.id %}"><button type="button" class="btn btn-sm btn-round btn-success ml-auto">Approve</button></a>
+        </div>
+        
+    </div>
+
+{% endfor %}
+</div>
+{% endif %}
+{% endif %}
+
 <div class="card">
   <div class="card-header card-header-text card-header-primary">
     <h4 class="card-title">Ninjas</h4>

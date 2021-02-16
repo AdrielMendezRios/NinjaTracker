@@ -86,10 +86,11 @@ class Session(models.Model):
     ninja = models.ForeignKey(Ninja, on_delete=CASCADE, default=0)
     session_date = models.DateTimeField(auto_now_add=True)
     session_duration = models.IntegerField()
-    session_assignment = models.CharField(max_length=100)
-    session_notes = models.CharField(max_length=500)
+    session_assignment = models.CharField(max_length=100, blank=True)
+    session_notes = models.CharField(max_length=500, blank=True, null=True)
     session_sensei = models.CharField(max_length=50)
     session_dojo = models.ForeignKey(Dojo, on_delete=PROTECT, default=0)
+    session_is_approved = models.BooleanField(default=False, blank=True)
     
 
     # def get_absolute_url(self):
