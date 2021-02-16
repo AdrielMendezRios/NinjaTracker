@@ -172,17 +172,7 @@ class DojoDetailView(generic.DetailView):
 
         return context
 
-@login_required(login_url='tracker:login')
-@allowed_users(allowed_roles=['admin','lead'])
-def session_approve(request, pk):
-    print(request.path_info)
-    session = Session.objects.get(id=pk)
-    user = get_user(request)
-    if user.is_director or user.is_lead:
-        session.session_is_approved = True
-        session.save()
-    dojo = session.session_dojo
-    return redirect(reverse('tracker:dojo', args=[dojo.id]))
+
     
     
 """               end of DOJO                     """
@@ -330,7 +320,6 @@ def session_update(request, pk):
             if user.is_director:
                 session.session_is_approved = True
                 session.save()
-            print(form)
             form.save()
             ninja = Ninja.objects.get(ninja_name=session.ninja.ninja_name)
             return redirect(reverse('tracker:dojo', args=[session.session_dojo.id]))
@@ -355,6 +344,16 @@ def session_delete(request, pk):
         return render(request,'tracker/session_delete.html', context)
     return redirect("../../")
 
+@login_required(login_url='tracker:login')
+@allowed_users(allowed_roles=['admin','lead'])
+def session_approve(request, pk):
+    session = Session.objects.get(id=pk)
+    user = get_user(request)
+    if user.is_director or user.is_lead:
+        session.session_is_approved = True
+        session.save()
+    dojo = session.session_dojo
+    return redirect(reverse('tracker:dojo', args=[dojo.id]))
 
 """ End Of SESSION"""
 

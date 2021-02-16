@@ -18,4 +18,5 @@
         {{ form|crispy }}
     <input class="btn btn-primary" type="submit" value="update Session">  
 </form>
+<a href="{% url 'tracker:session_approve' session.id %}"><button type="button" class="btn btn-sm btn-round btn-success ml-auto">Approve</button></a>
 {% endblock %}
