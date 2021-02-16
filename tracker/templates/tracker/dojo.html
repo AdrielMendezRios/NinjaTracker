@@ -69,7 +69,9 @@
               <hr>
               <a href="{% url 'tracker:session_update' session.id %}"><button type="button" class="btn btn-sm btn-round btn-info ml-auto">Edit</button></a>
               <a href="{% url 'tracker:session_delete' session.id %}"><button type="button" class="btn btn-sm btn-round btn-danger ml-auto">Delete</button></a>
-              <a href="{% url 'tracker:session_approve' session.id %}"><button type="button" class="btn btn-sm btn-round btn-success ml-auto">Approve</button></a>
+              {% if user.is_director or user.is_lead %}
+                <a href="{% url 'tracker:session_approve' session.id %}"><button type="button" class="btn btn-sm btn-round btn-success ml-auto">Approve</button></a>
+              {% endif %}
         </div>
         
     </div>
