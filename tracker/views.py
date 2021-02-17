@@ -161,8 +161,8 @@ class DojoDetailView(generic.DetailView):
                         in_dojo.append(todays_session)
                     if not todays_session.session_is_approved:
                         unapproved_sessions.append(todays_session)
-        print(dir(self.request))
-        print(self.request.path_info)
+        # print(dir(self.request))
+        # print(self.request.path_info)
 
         context['in_dojo'] = in_dojo
         context['ninjas'] = ninjas
@@ -213,12 +213,11 @@ class NinjaDetailView(generic.DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(NinjaDetailView, self).get_context_data(*args, **kwargs)
         sessions =  Session.objects.filter(ninja=self.object.id).order_by('-id')
-
         if sessions.count() > 0:
             latestSession = Session.objects.filter(ninja=self.object.id).latest()
             context['workingOn'] = latestSession.session_assignment
             sessionsThisMonth = list(Session.objects.filter(ninja=self.object.id, session_date__month__gte=self.current_month-1, session_date__year=self.current_year))
-            print(sessionsThisMonth)
+            # print(sessionsThisMonth)
             context['hrsThisMonth'] = calc_hours_in_month(self.object.date_registered, sessionsThisMonth)
         else:
             context['hrsThisMonth'] = 0
@@ -236,11 +235,12 @@ class NinjaDetailView(generic.DetailView):
 def ninjaInfo(request, pk):
     context = {}
     ninja = Ninja.objects.get(id=pk)
-    dojo = Dojo.objects.get(id=ninja.dojo.id)
+    # dojo = Dojo.objects.get(id=ninja.dojo.id)
     sessions = Session.objects.filter(ninja=pk).order_by('-id')
     periods = sessions_grouped_by_period(sessions, ninja.date_registered)
+    # print(dojo)
     context['ninja'] = ninja
-    context['dojo'] = dojo
+    # context['dojo'] = dojo
     context['periods'] = periods
     context['user'] = get_user(request)
     context['ninja_data'] = get_fields(ninja)
@@ -297,7 +297,7 @@ def session_create(request, pk):
         # print("printing request:", request.POST)
         form = SessionForm(request.POST)
         if form.is_valid():
-            print('its valid!')
+            # print('its valid!')
             form.save()
             this_session = Session.objects.filter(ninja=ninja.id).order_by("-id")[0]
             return redirect(reverse('tracker:dojo', args=[this_session.session_dojo.id]))
@@ -336,7 +336,7 @@ def session_delete(request, pk):
         ninja = session.ninja
 
         if request.method == 'POST':
-            print('in here!!')
+            # print('in here!!')
             session.delete()
             return redirect(reverse('tracker:ninja', args=[ninja.id]))
 
@@ -372,16 +372,16 @@ def calc_hours_in_month(reg_date,sessions_this_month):
     else:
         first_of_month = date(datetime.today().year,datetime.today().month,reg_date.day)
     last_of_month = first_of_month + relativedelta(months=+1)
-    print("first of the month",first_of_month)
-    print("last of the month",last_of_month)
+    # print("first of the month",first_of_month)
+    # print("last of the month",last_of_month)
     for session in sessions_this_month:
-        print(session.session_date.date())
+        # print(session.session_date.date())
         if first_of_month <= session.session_date.date() <= last_of_month:
             if session.session_duration >= 2:
                 hrs_this_month += 2
             else:
                 hrs_this_month += 1
-    print(hrs_this_month)
+    # print(hrs_this_month)
     return hrs_this_month
 
 
@@ -449,10 +449,10 @@ def pagination(obj, req, context, pg_amount):
 def session_countdown(obj):
     session_start = obj.session_date
     session_end = session_start + timedelta(hours=obj.session_duration)
-    print(obj.ninja.ninja_name)
-    print(datetime.now())
-    print(session_end)
-    print()
+    # print(obj.ninja.ninja_name)
+    # print(datetime.now())
+    # print(session_end)
+    # print()
     now = datetime.now().astimezone(et)
     # end = session_end
     return now < session_end
@@ -462,7 +462,7 @@ def session_countdown(obj):
 def get_user(request):
     if request.user:
         user = Employee.objects.get(pk=request.user.id)
-        print(user.is_director)
+        # print(user.is_director)
         return user
     return None
 
@@ -470,9 +470,9 @@ def get_user(request):
 def get_fields(obj):
     if obj:
         fields = [[field.name.replace("_", " "), field.value_to_string(obj)] for field in obj._meta.fields]
-        
+        # print("*!*!*!*!*!*!*!",fields)
         fields[6][1] = fields[6][1].split("T")[0]
-        fields[1][1] = Dojo.objects.get(id=fields[0][1])
+        fields[1][1] = Dojo.objects.get(id=int(fields[1][1]))
         fields.pop(0)
         for field in fields[8:11]:
             if "ninja" in field[0]:
