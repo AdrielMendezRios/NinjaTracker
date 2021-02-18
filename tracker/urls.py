@@ -4,7 +4,7 @@ from . import views
 
 # app_name = 'tracker'
 urlpatterns = [
-    path('', views.IndexView.as_view(), name='index'),
+    path('/', views.IndexView.as_view(), name='index'),
     path('q/', views.search, name='search'),
     path('register/', views.registerPage, name='register'),
     path('login/', views.loginPage, name='login'),
