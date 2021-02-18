@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
 
-# app_name = 'tracker'
+app_name = 'tracker'
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('q/', views.search, name='search'),
@@ -25,10 +25,7 @@ urlpatterns = [
     path('session_delete/<int:pk>/', views.session_delete, name="session_delete"),
     path('session_approve/<int:pk>/', views.session_approve, name="session_approve"),
 
-    path('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
-    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
-    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
-    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(), name="password_reset_complete"),
+
 
     # path('ninja/<dojo_name>/add/', views.NinjaCreateView.as_view(), name='ninja-add'),
     # path('session/add/<int:pk>/', views.SessionCreateView.as_view(), name='session-add'),
