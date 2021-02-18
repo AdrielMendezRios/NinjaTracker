@@ -20,22 +20,59 @@
   
 </div>
 <div class="row">
-<div class="col-md-4 col-lg-4 col-sm-12" style="margin-left:0%;">
-  <div class="card">
-    <div class="card-body">
-      <h4 class="card-title">{{ninja.ninja_package}}</h4>
-      <p><small class="text-muted">Ninja since: {{ninja.date_registered.date}}</small></p>
-      <h6 class="card-subtitle mb-2 text-muted">Hours this month: {{hrsThisMonth}} {% if hrsThisMonth == 1%} hour {% else %} hours {% endif %}</h6>
-      <p class="card-text">Last worked on: {{workingOn|title}}</p>
-      {% if ninja.current_belt == "White" %}
-        <p class="card-text">Scratch username: </p>
-        <p class="card-text">Scratch password: </p>
-      {% endif %}
-      <a href="{% url 'tracker:ninja-info'  ninja.id %}" class="card-link">Ninja Details</a>
+  <div class="col-md-4 col-lg-4 col-sm-12" style="margin-left:0%;">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{{ninja.ninja_package}}</h4>
+        <p><small class="text-muted">Ninja since: {{ninja.date_registered.date}}</small></p>
+        <h6 class="card-subtitle mb-2 text-muted">Hours this month: {{hrsThisMonth}} {% if hrsThisMonth == 1%} hour {% else %} hours {% endif %}</h6>
+        <p class="card-text">Last worked on: {{workingOn|title}}</p>
+        {% if ninja.current_belt == "White" %}
+          <p class="card-text">Scratch username: </p>
+          <p class="card-text">Scratch password: </p>
+        {% endif %}
+        <a href="{% url 'tracker:ninja-info'  ninja.id %}" class="card-link">Ninja Details</a>
+      </div>
     </div>
-  </div>
+  </div>   
+  {%if not latest_session.session_is_approved %}
+  <div class="card col-md-6 col-lg-6 col-sm-12" >
+      <div class="card-header card-header-text card-header-info">latest session on: {{latest_session.session_date}}</div>
+        <div class="card-body">
+            <h4 class="card-title">{{latest_session.session_duration}}hrs.</h4>
+            <p class="card-text">
+            <table class="table">
+                <thead>
+                    <tr>{% comment %} {{firstName|title}} {% endcomment %}
+                    <th scope="col"> Worked On</th>
+                    <th scope="col">Sensei Notes</th>
+                    <th scope="col">Sensei</th>
+                    <th scope="col">Dojo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-light">
+                    <th scope="row">{{latest_session.session_assignment|title}}</th>
+                    <td>{{latest_session.session_notes}}</td>
+                    <td>{{latest_session.session_sensei|title}}</td>
+                    <td>{{latest_session.session_dojo}}</td>
+                    </tr>
+                </tbody>
+            </table> 
+               {% if user.is_director or user.is_lead %}
+                <a href="{% url 'tracker:session_approve' latest_session.id %}"><button type="button" class="btn btn-sm btn-round btn-success ml-auto">Approve</button></a>
+              {% endif %}
+            <a href="{% url 'tracker:session_update' latest_session.id %}"><button type="button" class="btn btn-sm btn-round btn-warning">Edit</button></a>
+            <a href="{% url 'tracker:session_delete' latest_session.id %}"><button type="button" class="btn btn-sm btn-round btn-danger">Delete</button></a>
+            </p>
+    </div>
+ </div>
+ {% endif %}
 </div>
-</div>
+ 
+
+
+
 <div>
 <hr>
     <a href="{% url 'tracker:session_create' ninja.id %}"><button type="button" class="btn btn-info btn-sm">Add Session</button></a>
@@ -72,6 +109,9 @@
             <a href="{% url 'tracker:session_delete' session.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
             </p>
     </div>
+    
+
+
 </div>
 <br>
 {% endfor %}

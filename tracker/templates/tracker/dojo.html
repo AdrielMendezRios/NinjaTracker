@@ -65,7 +65,8 @@
         <div class="card-body">
               <p class="card-text">working on: {{session.session_assignment}}</p>
               <p class="card-text">working on: {{session.session_notes}}</p>
-              <p class="card-text">working on: {{session.session_is_approved}}</p>
+              <p class="card-text">Sensei: {{session.session_sensei}}</p>
+              <p class="card-text">approved on: {{session.session_is_approved}}</p>
               <hr>
               <a href="{% url 'tracker:session_update' session.id %}"><button type="button" class="btn btn-sm btn-round btn-info ml-auto">Edit</button></a>
               <a href="{% url 'tracker:session_delete' session.id %}"><button type="button" class="btn btn-sm btn-round btn-danger ml-auto">Delete</button></a>

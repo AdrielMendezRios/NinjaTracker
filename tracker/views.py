@@ -213,6 +213,7 @@ class NinjaDetailView(generic.DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(NinjaDetailView, self).get_context_data(*args, **kwargs)
         sessions =  Session.objects.filter(ninja=self.object.id).order_by('-id')
+        context['latest_session'] = sessions.latest()
         if sessions.count() > 0:
             latestSession = Session.objects.filter(ninja=self.object.id).latest()
             context['workingOn'] = latestSession.session_assignment
@@ -289,7 +290,7 @@ def ninja_update(request, pk):
 def session_create(request, pk):
     ninja = Ninja.objects.get(id=pk)
     user = get_user(request)
-    form = SessionForm(initial={'ninja':ninja, 'session_notes':'add notes here', 'session_sensei': user.username, 'session_dojo': user.home_dojo})
+    form = SessionForm(initial={'ninja':ninja, 'session_notes':'add notes here', 'session_sensei': user.first_name, 'session_dojo': user.home_dojo})
 
     context = {'form': form, 'ninja': ninja,  'user': user}
     
