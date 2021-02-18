@@ -30,4 +30,4 @@ urlpatterns = [
 admin.site.site_header = 'Ninja Tracker Administration'
 admin.site.site_title = 'Ninja Tracker Admin'
 admin.site.index_title = 'Admin site'
-admin.site.site_url = '/tracker'
+admin.site.site_url = '/'
