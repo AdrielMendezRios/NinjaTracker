@@ -12,6 +12,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, User, 
 class Dojo(models.Model):
     dojo_name = models.CharField(max_length=50)
     dojo_address = models.CharField(max_length=150, default="N/A")
+    
 
     def __str__(self):
         return self.dojo_name
@@ -80,7 +81,7 @@ class Ninja(models.Model):
         return str(self.id)
     
     def __str__(self):
-        return f"Ninja_ID:{self.id}, Name: {self.ninja_name}, Age: {self.ninja_age}, Belt: {self.current_belt}, Home Dojo: {self.dojo} "
+        return self.ninja_name #f"Ninja_ID:{self.id}, Name: {self.ninja_name}, Age: {self.ninja_age}, Belt: {self.current_belt}, Home Dojo: {self.dojo} "
 
 
 class Session(models.Model):
@@ -102,7 +103,7 @@ class Session(models.Model):
     
 
     def __str__(self):
-        return f"Ninja: {self.ninja.ninja_name}, Session Location: {self.session_dojo}, Session Date: {self.session_date}, Duration: {str(self.session_duration)}, Worked on: {self.session_assignment}, Sensei Notes: {self.session_notes}, Sensei: {self.session_sensei}"
+        return self.ninja.ninja_name #f"Ninja: {self.ninja.ninja_name}, Session Location: {self.session_dojo}, Session Date: {self.session_date}, Duration: {str(self.session_duration)}, Worked on: {self.session_assignment}, Sensei Notes: {self.session_notes}, Sensei: {self.session_sensei}"
 
 class EmployeeManager(UserManager):
     def create_user(self, email, username, password=None):
