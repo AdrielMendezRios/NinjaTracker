@@ -213,7 +213,7 @@ class NinjaDetailView(generic.DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(NinjaDetailView, self).get_context_data(*args, **kwargs)
         sessions =  Session.objects.filter(ninja=self.object.id).order_by('-id')
-        context['latest_session'] = sessions.latest()
+        latest_session = Session.objects.latest()
         if sessions.count() > 0:
             latestSession = Session.objects.filter(ninja=self.object.id).latest()
             context['workingOn'] = latestSession.session_assignment
@@ -225,6 +225,7 @@ class NinjaDetailView(generic.DetailView):
             context['workingOn'] = "Get them started on their first project!"
         context['firstName'] = self.object.ninja_name.split(' ')[0]
         context['sessions'] = sessions
+        context['latest_session'] = latest_session
         context['user'] = get_user(self.request)
 
         pagination(sessions, self.request, context, pg_amount=5)
