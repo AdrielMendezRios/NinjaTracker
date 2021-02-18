@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-
+# from aws_s3_creds import credentials as creds
 from pathlib import Path
 import os
 
@@ -33,7 +33,7 @@ SESSION_COOKIE_SECURE = True
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = '(y#+^l(@3r%-)1bbb1p=7%)#%9yu!wmioeec&ldpb=@=&0j5r(' OLD KEY
-SECRET_KEY = os.environ.get('SECRET_KEY') #creds['SECRET_KEY']
+SECRET_KEY = os.environ.get('SECRET_KEY') #creds['SECRET_KEY'] 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -163,9 +163,6 @@ STATIC_URL = '/static/'
 # STATICFILES_DIRS = (
 #     os.path.join(PROJECT_ROOT, 'tracker/static'),
 # )
-
-
-
 # AWS_ACCESS_KEY_ID = creds['aws_AKID']
 # AWS_SECRET_ACCESS_KEY =  creds['aws_SAK']
 # AWS_STORAGE_BUCKET_NAME =   'studenttracker-bucket'
@@ -179,3 +176,11 @@ STATIC_URL = '/static/'
 
 # STATIC_ROOT = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
+
+# SMTP Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'ninjatrackercn@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') # 'kbvgnpfgcgfzggnn'

@@ -49,6 +49,9 @@ The above copyright notice and this permission notice shall be included in all c
               <div class="footer text-center">
                 <input class="btn btn-primary" type="submit" value="Login">  
               </div>
+              <div class="footer text-center">
+                Forgot Password? <a href="{% url 'reset_password' %}"> Reset Password </a> 
+              </div>
               {{form.errors}}
             </form>
           </div>
