@@ -17,10 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.i18n import JavaScriptCatalog
 from django.contrib.auth import views as auth_views
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.views.generic.base import RedirectView
 
 
 
 urlpatterns = [
+    path("favicon.ico", RedirectView.as_view(url=staticfiles_storage.url("favicon.ico"))),
     path('tracker/', include('tracker.urls')),
     path('jsi18n', JavaScriptCatalog.as_view(), name='js-catlog'),
     path('admin/', admin.site.urls),
