@@ -44,7 +44,12 @@ class IndexView(generic.ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(IndexView, self).get_context_data(*args, **kwargs)
         context['ninja_list'] = Ninja.objects.all()
-        context['user'] = get_user(self.request)
+        user = get_user(self.request)
+        context['user'] = user
+        if user.is_director:
+            print(dir(user))
+            context['sessions'] = Session.objects.filter(session_dojo=user.home_dojo)
+
         
         return context
 
@@ -213,7 +218,7 @@ class NinjaDetailView(generic.DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(NinjaDetailView, self).get_context_data(*args, **kwargs)
         sessions =  Session.objects.filter(ninja=self.object.id).order_by('-id')
-        latest_session = Session.objects.latest()
+        latest_session = Session.objects.filter(ninja=self.object.id).latest() if len(sessions) > 0 else False
         if sessions.count() > 0:
             latestSession = Session.objects.filter(ninja=self.object.id).latest()
             context['workingOn'] = latestSession.session_assignment
@@ -224,7 +229,7 @@ class NinjaDetailView(generic.DetailView):
             context['hrsThisMonth'] = 0
             context['workingOn'] = "Get them started on their first project!"
         context['firstName'] = self.object.ninja_name.split(' ')[0]
-        context['sessions'] = sessions
+        context['number_of_sessions'] = len(sessions)
         context['latest_session'] = latest_session
         context['user'] = get_user(self.request)
 

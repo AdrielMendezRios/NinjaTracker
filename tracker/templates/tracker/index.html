@@ -40,6 +40,11 @@
         </a>
     </div>
     {% endif %}
+    {% comment %} {% if sessions %}
+        {% for session in sessions %}
+            {{session}}
+        {% endfor %}
+    {% endif %} {% endcomment %}
 </div>
 {% endblock %}
 

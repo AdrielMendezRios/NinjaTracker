@@ -31,13 +31,14 @@
           <p class="card-text">Scratch username: </p>
           <p class="card-text">Scratch password: </p>
         {% endif %}
+        <p class="card-text">Number of sessions: {{number_of_sessions}}</p>
         <a href="{% url 'tracker:ninja-info'  ninja.id %}" class="card-link">Ninja Details</a>
       </div>
     </div>
   </div>   
-  {%if not latest_session.session_is_approved %}
+  {%if latest_session and not latest_session.session_is_approved %}
   <div class="card col-md-6 col-lg-6 col-sm-12" >
-      <div class="card-header card-header-text card-header-info">latest session on: {{latest_session.session_date}}</div>
+      <div class="card-header card-header-text card-header-info">{{latest_session.ninja.ninja_name}} <br> recent session on: {{latest_session.session_date}}</div>
         <div class="card-body">
             <h4 class="card-title">{{latest_session.session_duration}}hrs.</h4>
             <p class="card-text">

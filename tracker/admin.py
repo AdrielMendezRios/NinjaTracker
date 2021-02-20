@@ -4,7 +4,7 @@ from .models import Dojo, Ninja, Session, Employee
 from .forms import EmployeeCreationForm
 from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy as _
-
+from django.db.models import Count
 
 class EmployeeAdmin(UserAdmin):
     model = Employee

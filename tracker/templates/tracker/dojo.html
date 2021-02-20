@@ -68,11 +68,12 @@
               <p class="card-text">Sensei: {{session.session_sensei}}</p>
               <p class="card-text">approved on: {{session.session_is_approved}}</p>
               <hr>
-              <a href="{% url 'tracker:session_update' session.id %}"><button type="button" class="btn btn-sm btn-round btn-info ml-auto">Edit</button></a>
-              <a href="{% url 'tracker:session_delete' session.id %}"><button type="button" class="btn btn-sm btn-round btn-danger ml-auto">Delete</button></a>
               {% if user.is_director or user.is_lead %}
                 <a href="{% url 'tracker:session_approve' session.id %}"><button type="button" class="btn btn-sm btn-round btn-success ml-auto">Approve</button></a>
               {% endif %}
+              <a href="{% url 'tracker:session_update' session.id %}"><button type="button" class="btn btn-sm btn-round btn-info ml-auto">Edit</button></a>
+              <a href="{% url 'tracker:session_delete' session.id %}"><button type="button" class="btn btn-sm btn-round btn-danger ml-auto">Delete</button></a>
+
         </div>
         
     </div>
@@ -84,7 +85,7 @@
 
 <div class="card">
   <div class="card-header card-header-text card-header-primary">
-    <h4 class="card-title">Ninjas</h4>
+    <h4 class="card-title">{{ninjas|length}} Ninjas</h4>
     <p class="category">Choose Your Pupil</p>
   </div>
   {% for ninja in page.object_list %}
