@@ -7,7 +7,9 @@
 {% block subtitle %}
   {% if dojo.dojo_name == "Raleigh"%}
       Home of the Rěnzhě
-  {%else%}
+  {%else dojo.dojo_name == "Wake Forest"%}
+      Home of the Oni
+   {%else%}
       Home of the Shinobi
   {% endif %}
 {% endblock subtitle %}
