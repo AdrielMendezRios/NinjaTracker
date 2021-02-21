@@ -41,8 +41,9 @@ ALLOWED_HOSTS = [
     'localhost',
     'localhost:8000',
     '127.0.0.1:8000',
-    'ninjatracker.herokuapp.com'
-    'ninjatracker.app'
+    'ninjatracker.herokuapp.com',
+    'ninjatracker.app',
+    'www.ninjatracker.app'
 ]
 
 
