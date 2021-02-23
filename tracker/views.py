@@ -19,6 +19,7 @@ from .models import Dojo, Ninja, Session, Employee
 from .forms import SessionForm, NinjaForm, EmployeeCreationForm
 from .decorators import *
 import logging
+import csv
 
 logger = logging.getLogger(__name__)
 
@@ -46,8 +47,8 @@ class IndexView(generic.ListView):
         context['ninja_list'] = Ninja.objects.all()
         user = get_user(self.request)
         context['user'] = user
+        # ninjaUpload() # this uploads ninjas into database from scrubbed csv file DO NOT uncomment
         if user.is_director:
-            print(dir(user))
             context['sessions'] = Session.objects.filter(session_dojo=user.home_dojo)
 
         
@@ -168,7 +169,6 @@ class DojoDetailView(generic.DetailView):
                         unapproved_sessions.append(todays_session)
         # print(dir(self.request))
         # print(self.request.path_info)
-
         context['in_dojo'] = in_dojo
         context['ninjas'] = ninjas
         context['unapproved_sessions'] = unapproved_sessions
@@ -178,7 +178,6 @@ class DojoDetailView(generic.DetailView):
         return context
 
 
-    
     
 """               end of DOJO                     """
 
@@ -269,6 +268,40 @@ def ninja_create(request, pk):
     
     return render(request, 'tracker/ninja_create.html', context)
 
+def ninjaUpload():
+    """
+        only call this function if you have a lot of kids to add to the system 
+        and have a csv file with the right information.
+    """
+    # result = Ninja.objects.filter(Q(ninja_name__icontains=search_query))
+    dojo = Dojo.objects.filter(id=1)
+    ninjas = []
+    with open('ninjas.csv','r') as file:
+        csv_reader = csv.reader(file, delimiter=',')
+        ninja = {}
+        cont = 0
+        for row in csv_reader:
+            if cont == 0:
+                cont += 1
+            elif row[2] != '':
+                ninja['ninja_name'] = row[0]
+                unformatDate = row[1].split('-')
+                date = '-'.join([unformatDate[2],unformatDate[0], unformatDate[1]])
+                ninja['date_registered'] = date
+
+                pack = float(row[2][1:])
+                if pack < 150:
+                    ninja['ninja_package'] = 'Create Lite'
+                else:
+                    ninja['ninja_package'] = 'Create Standard'
+                ninja['parent_email'] = row[3]
+                ninjas.append(ninja)
+                print(ninja)
+                ninja = {}
+    for ninja in ninjas:
+        if len(Ninja.objects.filter(ninja_name__icontains=ninja['ninja_name'])) > 0:    
+             ninja = Ninja(dojo=dojo[0], ninja_name=ninja['ninja_name'], date_registered=ninja['date_registered'], ninja_package=ninja['ninja_package'],parent_email=ninja['parent_email'] )
+             ninja.save()
 
 @login_required(login_url='tracker:login')
 @allowed_users(allowed_roles=['admin','lead', 'sensei'])
@@ -285,6 +318,8 @@ def ninja_update(request, pk):
     
     context = {'form': form, 'ninja': ninja, 'user': get_user(request)}
     return render(request, 'tracker/ninja_update.html', context)
+
+
 
 """               end of NINJA                     """
 
@@ -487,4 +522,7 @@ def get_fields(obj):
 
        
         return fields
+
+
+
 """ Helper Functions end """

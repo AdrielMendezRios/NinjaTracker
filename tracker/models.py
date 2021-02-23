@@ -20,7 +20,7 @@ class Dojo(models.Model):
 class Ninja(models.Model):
     dojo = models.ForeignKey(Dojo, on_delete=CASCADE, default=0)
     ninja_name = models.CharField(max_length=50)
-    ninja_age = models.IntegerField()
+    ninja_age = models.IntegerField(default=0)
     scratch_username = models.CharField("Scratch username", max_length=50, default="Request info")
     scratch_password = models.CharField("Scratch password", max_length=50, default="Request info")
     # ninja_is_active = models.BooleanField(default=True)
