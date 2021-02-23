@@ -28,8 +28,8 @@
         <h6 class="card-subtitle mb-2 text-muted">Hours this month: {{hrsThisMonth}} {% if hrsThisMonth == 1%} hour {% else %} hours {% endif %}</h6>
         <p class="card-text">Last worked on: {{workingOn|title}}</p>
         {% if ninja.current_belt == "White" %}
-          <p class="card-text">Scratch username: </p>
-          <p class="card-text">Scratch password: </p>
+          <p class="card-text">Scratch username: {{ninja.scratch_name}}</p>
+          <p class="card-text">Scratch password: {{ninja.scratch_password}}</p>
         {% endif %}
         <p class="card-text">Number of sessions: {{number_of_sessions}}</p>
         <a href="{% url 'tracker:ninja-info'  ninja.id %}" class="card-link">Ninja Details</a>
