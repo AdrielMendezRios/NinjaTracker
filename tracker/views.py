@@ -172,7 +172,7 @@ class DojoDetailView(generic.DetailView):
         context['in_dojo'] = in_dojo
         context['ninjas'] = ninjas
         context['unapproved_sessions'] = unapproved_sessions
-        pagination(ninjas, self.request, context, pg_amount=10)
+        pagination(ninjas, self.request, context, pg_amount=20)
         context['user'] = get_user(self.request)
 
         return context
