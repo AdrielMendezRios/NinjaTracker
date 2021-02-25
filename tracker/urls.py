@@ -24,7 +24,7 @@ urlpatterns = [
     path('session_update/<int:pk>/', views.session_update, name="session_update"),
     path('session_delete/<int:pk>/', views.session_delete, name="session_delete"),
     path('session_approve/<int:pk>/', views.session_approve, name="session_approve"),
-
+    path('approve_all_sessions/<int:pk>/', views.approve_all_dojo_sessions, name="approve_all_dojo_sessions"),
 
 
     # path('ninja/<dojo_name>/add/', views.NinjaCreateView.as_view(), name='ninja-add'),

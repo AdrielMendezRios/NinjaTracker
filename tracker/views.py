@@ -156,27 +156,22 @@ class DojoDetailView(generic.DetailView):
         context = super(DojoDetailView, self).get_context_data(*args, **kwargs)
         ninjas = Ninja.objects.filter(dojo=self.object.id).order_by('-id')
         context['form'] = SessionForm()
-        in_dojo = []
-        unapproved_sessions = []
-        for ninja in ninjas:
-            if Session.objects.filter(ninja=ninja.id):
-                todays_session = Session.objects.filter(ninja=ninja.id).latest('session_date')
-                todays_session.session_date = todays_session.session_date.astimezone(et)
-                if todays_session.session_date.date() == datetime.now().date():
-                    if session_countdown(todays_session):
-                        in_dojo.append(todays_session)
-                    if not todays_session.session_is_approved:
-                        unapproved_sessions.append(todays_session)
-        # print(dir(self.request))
-        # print(self.request.path_info)
-        context['in_dojo'] = in_dojo
+        collect_todays_sessions(ninjas, context) # adds relavent sessions into context['in_dojo']
+        collect_unapproved_sessions(self.object.id, context) # adds unapproved session into context['unapproved_sessions']
         context['ninjas'] = ninjas
-        context['unapproved_sessions'] = unapproved_sessions
-        pagination(ninjas, self.request, context, pg_amount=20)
+        pagination(ninjas, self.request, context, pg_amount=10)
         context['user'] = get_user(self.request)
 
         return context
 
+@login_required(login_url='tracker:login')
+@allowed_users(allowed_roles=['admin','lead'])  
+def approve_all_dojo_sessions(request, pk):
+    unpproved_sessions_queryset = Session.objects.filter(session_dojo=pk, session_is_approved=False)
+    for session in unpproved_sessions_queryset:
+        session.session_is_approved = True
+        session.save()
+    return redirect(reverse('tracker:dojo', args=[pk]))
 
     
 """               end of DOJO                     """
@@ -523,6 +518,18 @@ def get_fields(obj):
        
         return fields
 
+def collect_todays_sessions(ninjas, context):
+    in_dojo = []
+    for ninja in ninjas:
+        if Session.objects.filter(ninja=ninja.id):
+            todays_session = Session.objects.filter(ninja=ninja.id).latest('session_date')
+            todays_session.session_date = todays_session.session_date.astimezone(et)
+            if todays_session.session_date.date() == datetime.now().date():
+                if session_countdown(todays_session):
+                    in_dojo.append(todays_session)
+    context['in_dojo'] = in_dojo
 
+def collect_unapproved_sessions(dojo, context):
+    context['unapproved_sessions'] = Session.objects.filter(session_dojo=dojo, session_is_approved=False)
 
 """ Helper Functions end """
