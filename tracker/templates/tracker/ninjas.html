@@ -13,7 +13,7 @@
 {% if ninja_list or ninjas %}
 <div class="card">
   <div class="card-header card-header-text card-header-primary ">
-    <h4 class="card-title">Ninjas</h4>
+    <h4 class="card-title">{{ninja_list|length}} Ninjas</h4>
     <p class="category">Choose Your Pupil</p>
   </div>
   {% for ninja in page.object_list %}
