@@ -4,7 +4,7 @@ from django import forms
 from .models import Session, Ninja
 from django.forms.widgets import HiddenInput
 from django.forms.fields import DateField, ChoiceField, MultipleChoiceField, Textarea, CharField, TextInput, EmailField, DateTimeField
-from django.forms.widgets import RadioSelect, CheckboxSelectMultiple, Select, CheckboxInput, DateInput
+from django.forms.widgets import RadioSelect, CheckboxSelectMultiple, Select, CheckboxInput, DateInput, NumberInput
 from django.contrib.admin.widgets import AdminDateWidget
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelChoiceField
@@ -22,6 +22,12 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 
+
+class BankWithdrawalForm(forms.Form):
+    withdrawal_amount = forms.IntegerField(label='Withdrawal Amount')
+
+class BankDepositForm(forms.Form):
+    deposit_amount = forms.IntegerField(label='Deposit Amount')
 
 class SessionForm(ModelForm):
     session_notes = CharField(widget=Textarea)

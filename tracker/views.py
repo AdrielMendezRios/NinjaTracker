@@ -16,7 +16,7 @@ import pytz
 import time
 
 from .models import Dojo, Ninja, Session, Employee
-from .forms import SessionForm, NinjaForm, EmployeeCreationForm
+from .forms import SessionForm, NinjaForm, EmployeeCreationForm, BankWithdrawalForm, BankDepositForm
 from .decorators import *
 import logging
 import csv
@@ -314,7 +314,32 @@ def ninja_update(request, pk):
     context = {'form': form, 'ninja': ninja, 'user': get_user(request)}
     return render(request, 'tracker/ninja_update.html', context)
 
+@login_required(login_url='tracker:login')
+@allowed_users(allowed_roles=['admin','lead', 'sensei'])
+def ninja_bank(request, pk):
+    context = {}
+    ninja = Ninja.objects.get(id=pk)
+    user = get_user(request)
+    withdrawalForm = BankWithdrawalForm()
+    depositForm = BankDepositForm()
+    if request.method == 'POST':
+        form = BankWithdrawalForm(request.POST)
+        widthdrawl_amount = int(form['withdrawal_amount'].value())
+        if widthdrawl_amount <= ninja.ninja_bank:
+            ninja.ninja_bank -= widthdrawl_amount
+            ninja.save()
+            return redirect(reverse( 'tracker:ninja-bank', args=[ninja.id]))
+    if request.method == 'GET':
+        form = BankDepositForm(request.GET)
+        if form['deposit_amount'].value():
+            deposit_amount = int(form['deposit_amount'].value())
+            if deposit_amount > 0:
+                ninja.ninja_bank += deposit_amount
+                ninja.save()
+                return redirect(reverse('tracker:ninja-bank', args=[ninja.id]))
 
+    context = {'ninja': ninja, 'user' : user, 'withdrawalForm' : withdrawalForm, 'depositeForm': depositForm }
+    return render(request, 'tracker/bank.html', context)
 
 """               end of NINJA                     """
 

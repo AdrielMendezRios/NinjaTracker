@@ -1,0 +1,39 @@
+{% extends 'tracker/index.html' %}
+{% block tabTitle %} Ninja Tracker | {{ninja.ninja_name|title}} {% endblock %}
+{% load crispy_forms_tags %}
+{% block title %}
+        {{ninja.ninja_name|title}}
+{% endblock title %}
+
+{% block subtitle %}
+    {{ninja.current_belt}} Belt
+    <br>
+    {{ninja.dojo.dojo_name}}
+{% endblock subtitle %}
+
+
+{% block content %}
+    {{ninja.ninja_name}}
+    {{ninja.ninja_bank}}
+    {% block form %}
+    <div class="row">
+        <div class="col-4 ml-auto mr-auto">
+            <form method="POST">
+                {% csrf_token%}
+                    {{ withdrawalForm|crispy }}
+                    
+                <input class="btn btn-primary" type="submit" value="widthraw tickets">  
+            </form>
+        </div>
+        <div class="col-4 ml-auto mr-auto">
+        <form method="GET">
+            {% csrf_token%}
+                {{ depositeForm|crispy }}
+                
+            <input class="btn btn-primary" type="submit" value="deposit tickets">  
+        </form>
+        </div>
+    </div> 
+    {% endblock %}
+
+{% endblock %}

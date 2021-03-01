@@ -18,6 +18,8 @@ urlpatterns = [
     path('<int:pk>/ninja/info/', views.ninjaInfo, name='ninja-info'),
     path('ninja/<int:pk>/create/', views.ninja_create, name='ninja-create'),
     path('ninja/<int:pk>/update/', views.ninja_update, name='ninja-update'),
+    path('ninja/<int:pk>/bank/', views.ninja_bank, name='ninja-bank'),
+
     path('ninjas/', views.NinjaListView.as_view(), name='ninjas'),
 
     path('session_create/<int:pk>/', views.session_create, name="session_create"),

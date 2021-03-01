@@ -23,6 +23,7 @@ class Ninja(models.Model):
     ninja_age = models.IntegerField(default=0)
     scratch_username = models.CharField("Scratch username", max_length=50, default="Request info")
     scratch_password = models.CharField("Scratch password", max_length=50, default="Request info")
+    ninja_bank = models.IntegerField(default=5)
     # ninja_is_active = models.BooleanField(default=True)
 
 
