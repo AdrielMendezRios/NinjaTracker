@@ -324,7 +324,7 @@ def ninja_bank(request, pk):
     depositForm = BankDepositForm()
     if request.method == 'POST':
         form = BankWithdrawalForm(request.POST)
-        widthdrawl_amount = int(form['withdrawal_amount'].value())
+        widthdrawl_amount = abs(int(form['withdrawal_amount'].value()))
         if widthdrawl_amount <= ninja.ninja_bank:
             ninja.ninja_bank -= widthdrawl_amount
             ninja.save()

@@ -6,31 +6,41 @@
 {% endblock title %}
 
 {% block subtitle %}
-    {{ninja.current_belt}} Belt
-    <br>
-    {{ninja.dojo.dojo_name}}
+    <h2 class="title">Ticket Bank</h2>
 {% endblock subtitle %}
 
 
 {% block content %}
-    {{ninja.ninja_name}}
-    {{ninja.ninja_bank}}
+    <div>
+        <a href="{% url 'tracker:ninja' ninja.id %}" style="color:white;"><button type="button" class="btn btn-sm btn-round btn-success">Go to Profile</button></a>
+    </div>
+    <div class="row">
+        <h2 class="mr-auto ml-auto"> {{ninja.ninja_name|title}}'s Ticket Bank</h2>
+
+    </div>
+    <div class="row">
+        <h4 class="mr-auto ml-auto title">Current Ticket Balance: {{ninja.ninja_bank}}</h4>
+    </div>
+    <hr>
+
     {% block form %}
     <div class="row">
-        <div class="col-4 ml-auto mr-auto">
+        <div class="col-6 ml-auto mr-auto">
             <form method="POST">
                 {% csrf_token%}
+                <div class="row col-2 ml-auto mr-auto">
                     {{ withdrawalForm|crispy }}
-                    
-                <input class="btn btn-primary" type="submit" value="widthraw tickets">  
+                </div>
+                <input class="btn btn-primary btn-round btn-sm" type="submit" value="widthraw tickets">  
             </form>
         </div>
-        <div class="col-4 ml-auto mr-auto">
+        <div class="col-6 ml-auto mr-auto">
         <form method="GET">
             {% csrf_token%}
+            <div class="row col-2 ml-auto mr-auto">
                 {{ depositeForm|crispy }}
-                
-            <input class="btn btn-primary" type="submit" value="deposit tickets">  
+            </div>
+            <input class="btn btn-primary btn-round btn-sm" type="submit" value="deposit tickets">  
         </form>
         </div>
     </div> 
