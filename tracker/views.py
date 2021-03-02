@@ -430,7 +430,8 @@ def calc_hours_in_month(reg_date,sessions_this_month):
     hrs_this_month = 0
     print(sessions_this_month)
     if reg_date.day > date.today().day:
-        first_of_month = date(datetime.today().year,datetime.today().month-1,reg_date.day)
+        reg_date_in_month = date(datetime.today().year,datetime.today().month,reg_date.day) - relativedelta(month=1)
+        first_of_month = reg_date_in_month #date(datetime.today().year,datetime.today().month-1,reg_date.day)
     else:
         first_of_month = date(datetime.today().year,datetime.today().month,reg_date.day)
     last_of_month = first_of_month + relativedelta(months=+1)
