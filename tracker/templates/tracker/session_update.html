@@ -17,9 +17,12 @@
 <form method="POST">
     {% csrf_token%}
         {{ form|crispy }}
-    <input class="btn btn-primary" type="submit" value="update Session">  
+    <input class="btn btn-primary" type="submit" name="update session" value="update Session">
+    {% if not session.session_is_approved %}
+    <input class="btn btn-success" type="submit" name="approve session" value="Approve Session">
+    {% endif %}
 </form>
-{% if not session.session_is_approved %}
+{% comment %} {% if not session.session_is_approved %}
 <a href="{% url 'tracker:session_approve' session.id %}"><button type="button" class="btn btn-sm btn-round btn-success ml-auto">Approve</button></a>
-{% endif %}
+{% endif %} {% endcomment %}
 {% endblock %}

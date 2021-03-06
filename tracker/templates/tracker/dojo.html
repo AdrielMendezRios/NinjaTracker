@@ -40,10 +40,11 @@
             <p class="category">started {{session.session_date.time}} for {{session.session_duration}} {% if session.session_duration > 1 %} hrs. {% else %} hr {% endif %}</p>
         </div></a>
         <div class="card-body">
-              <p class="card-text">working on: {{session.session_assignment}}</p>
+              <p class="card-text">Working On: {{session.session_assignment}}</p>
               <hr>
               <a href="{% url 'tracker:session_update' session.id %}"><button type="button" class="btn btn-sm btn-round btn-info ml-auto">Edit</button></a>
               <a href="{% url 'tracker:session_delete' session.id %}"><button type="button" class="btn btn-sm btn-round btn-danger ml-auto">Delete</button></a>
+              <a href="{% url 'tracker:ninja-bank' session.ninja.id %}"><button type="button" class="btn btn-sm btn-round btn-success ml-auto">Bank</button></a>
         </div>
         
     </div>
@@ -66,8 +67,8 @@
             <p class="category">Done on {{session.session_date.date}} for {{session.session_duration}} {% if session.session_duration > 1 %} hrs. {% else %} hr {% endif %}</p>
         </div></a>
         <div class="card-body">
-              <p class="card-text">working on: {{session.session_assignment}}</p>
-              <p class="card-text">working on: {{session.session_notes}}</p>
+              <p class="card-text">Working On: {{session.session_assignment}}</p>
+              <p class="card-text">Session Notes: {{session.session_notes}}</p>
               <p class="card-text">Sensei: {{session.session_sensei}}</p>
               <hr>
               {% if user.is_director or user.is_lead %}

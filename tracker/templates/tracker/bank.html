@@ -13,6 +13,7 @@
 {% block content %}
     <div>
         <a href="{% url 'tracker:ninja' ninja.id %}" style="color:white;"><button type="button" class="btn btn-sm btn-round btn-success">Go to Profile</button></a>
+        <a href="{% url 'tracker:dojo' ninja.dojo.id %}" style="color:white;"><button type="button" class="btn btn-sm btn-round btn-success">Go to Dojo</button></a>
     </div>
     <div class="row">
         <h2 class="mr-auto ml-auto"> {{ninja.ninja_name|title}}'s Ticket Bank</h2>

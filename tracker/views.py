@@ -379,9 +379,10 @@ def session_update(request, pk):
         # print("printing request:", request.POST)
         form = SessionForm(request.POST, instance=session)
         if form.is_valid():
-            # if user.is_director:
-            #     session.session_is_approved = True
-            #     session.save()
+            print(request.POST)
+            if 'approve session' in request.POST:
+                session.session_is_approved = True
+                session.save()
             form.save()
             ninja = Ninja.objects.get(ninja_name=session.ninja.ninja_name)
             return redirect(reverse('tracker:dojo', args=[session.session_dojo.id]))
